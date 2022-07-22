@@ -1,0 +1,189 @@
+<?php
+
+namespace App\Http\Controllers\api;
+
+use App\Exports\BrochureExport;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Controllers\Controller;
+use App\Models\Brochur;
+use App\Models\Brochure_pdf;
+use App\Models\Category;
+use App\Models\SubCategory;
+use Illuminate\Contracts\Session\Session;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+
+
+class BrochureController extends Controller
+{
+    public function createBrochure(Request $request){
+        // dd(Auth::user());
+        $validator=Validator::make($request->all(),[
+            'brochure_number'=>"required|unique:brochurs,brochure_number",
+            'category'=>'required',
+            'sub_category'=>'required',
+            'name'=>'required',
+            'date_received'=>'required',
+            'publisher'=>'required',
+            'file'=>'required',
+        ]);
+
+        if($validator->fails()){
+            $response=[
+                'status'=>'error',
+                'message'=>$validator->errors()->all(),
+            ];
+            return response()->json($response,422);
+        }
+        else{
+        // Handle file Upload
+        if($request->hasFile('file')){
+
+            //Storage::delete('/public/avatars/'.$user->avatar);
+
+            // Get filename with the extension
+            $filenameWithExt = $request->file('file')->getClientOriginalName();
+            //Get just filename
+            $filename = pathinfo($filenameWithExt, Auth::user()->id);
+           
+            $path = $request->file('file')->storeAs('public/brochures/'.Auth::user()->id,$filename);
+
+            $pdf=new Brochure_pdf();
+            $pdf->title=$filename;
+            $pdf->url=$path;
+            $pdf->save();
+
+        }
+
+        $brochure= new Brochur();
+        $brochure->brochure_number=$request->brochure_number;
+        $brochure->category_id=$request->category;
+        $brochure->sub_category_id=$request->sub_category;
+        $brochure->name=$request->name;
+        $brochure->date_received=$request->date_received;
+        $brochure->publisher=$request->publisher;
+        $brochure->brochure_pdf_id=$pdf->id;
+        $brochure->created_id=Auth::user()->id;
+        $brochure->save();
+        $response=[
+            'status'=>'done',
+            'message'=>'Brochure has been successfully added',
+        ];
+        return response()->json($response,200);
+        }
+    }
+
+    public function editBrochure(Request $request,Brochur $brochur){
+        // dd($brochur);
+        $validator=Validator::make($request->all(),[
+            'brochure_number'=>"required|unique:brochurs,brochure_number",
+            'category'=>'required',
+            'sub_category'=>'required',
+            'name'=>'required',
+            'date_received'=>'required',
+            'publisher'=>'required',
+            'file'=>'required',
+        ]);
+
+        if($validator->fails()){
+            $response=[
+                'status'=>'error',
+                'message'=>$validator->errors()->all(),
+            ];
+            return response()->json($response,422);
+        }
+        else{
+        // Handle file Upload
+        if($request->hasFile('file')){
+
+            //Storage::delete('/public/avatars/'.$user->avatar);
+
+            // Get filename with the extension
+            $filenameWithExt = $request->file('file')->getClientOriginalName();
+            //Get just filename
+            $filename = pathinfo($filenameWithExt, Auth::user()->id);
+            // Get just ext
+            // $extension = $request->file('file')->getClientOriginalExtension();
+            // Filename to store
+            // $fileNameToStore = $filename.'_'.time().'.'.$extension;
+            // Upload Image
+            $path = $request->file('file')->storeAs('public/brochures/'.Auth::user()->id,$filename);
+
+            $pdf=Brochure_pdf::find($brochur->brochure_pdf_id)->first();
+            $pdf->title=$filename;
+            $pdf->url=$path;
+            $pdf->save();
+        }
+
+        $brochur->brochure_number=$request->brochure_number;
+        $brochur->category_id=$request->category;
+        $brochur->sub_category_id=$request->sub_category;
+        $brochur->name=$request->name;
+        $brochur->date_received=$request->date_received;
+        $brochur->publisher=$request->publisher;
+        $brochur->brochure_pdf_id=$pdf->id;
+        $brochur->created_id=Auth::user()->id;
+        $brochur->save();
+        $response=[
+            'status'=>'done',
+            'message'=>'Brochure has been successfully modified',
+            "brochure"=>$brochur
+        ];
+        return response()->json($response,200);
+        }
+    }
+
+    public function deleteBrochure(Brochur $brochure){
+        // dd($brochure);
+        $pdf=Brochure_pdf::find($brochure->brochure_pdf_id );
+        $brochure->delete();
+        $pdf->delete();
+        $response=[
+            'status'=>'done',
+            'message'=>'Brochures have been successfully deleted',
+        ];
+        return response()->json($response,200);
+    }
+
+    public function exportBrochure(){
+
+        $brochur=Brochur::get();
+        
+        return Excel::download(new BrochureExport, 'brochures.xlsx');
+    }
+    public function fetchCategory(){
+        $category=Category::with('getSubCategory')->get();
+        $data=$category->toJson();
+        return response($data,200);
+    }
+    public function fetchSubCategory(Category $category){
+        $subcategory=$category->getSubCategory;
+        // dd($subcategory);
+        return response($subcategory,200);
+    }
+    public function brochureQR(Brochur $brochure){
+            $brochure_id=$brochure->id;
+            
+            $qrcode=QrCode::generate('http://127.0.0.1:8000/api/downloadQR/'.$brochure_id);
+            Storage::disk('public')->put('qrcode/'.$brochure_id.'.svg', $qrcode);
+            $url = 'qrcode/'.$brochure_id.'.svg';
+            $brochure->QR_code=$url;
+            $brochure->save();
+            $response=[
+                'status'=>'done',
+                'message'=>'QR code created successfully',
+                'url'=>$url,
+            ];
+            return response()->json($response,200);
+    }
+
+    public function DownloadQR(Brochur $brochure){
+        $file=$brochure->brochur_pdf;
+        $path=$file[0]->url;
+        return Storage::download($path);        
+    }
+}
+
