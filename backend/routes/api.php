@@ -32,12 +32,12 @@ Route::middleware('auth:api')->group(function(){
     Route::post('get-brochureQR/{brochure}',[BrochureController::class,'brochureQR'])->name('BrochureQR');
     // fetch api
     // cateogry
-    Route::get('fetch-category',[BrochureController::class,'fetchCategory'])->name('FetchCategory');
+    Route::post('fetch-category',[BrochureController::class,'fetchCategory'])->name('FetchCategory');
     // subCategory
-    Route::get('fetch-sub-category/{category}',[BrochureController::class,'fetchSubCategory'])->name('FetchSubCategory');
+    Route::post('fetch-sub-category/{category}',[BrochureController::class,'fetchSubCategory'])->name('FetchSubCategory');
 
 });
-Route::get('downloadQR/{brochure}',[BrochureController::class,'DownloadQR'])->name('DownloadQR');
+Route::post('downloadQR/{brochure}',[BrochureController::class,'DownloadQR'])->name('DownloadQR');
 
 // customer api routes
 Route::get('search-brochure/{brochurenumber?}/{name?}/{publisher?}',[CustomerController::class,'searchBrochure'])->name('SearchBrochure');

@@ -33,10 +33,10 @@ class BrochureController extends Controller
 
         if($validator->fails()){
             $response=[
-                'status'=>'error',
+                'status'=>400,
                 'message'=>$validator->errors()->all(),
             ];
-            return response()->json($response,422);
+            return response()->json($response,200);
         }
         else{
         // Handle file Upload
@@ -91,10 +91,10 @@ class BrochureController extends Controller
 
         if($validator->fails()){
             $response=[
-                'status'=>'error',
+                'status'=>400,
                 'message'=>$validator->errors()->all(),
             ];
-            return response()->json($response,422);
+            return response()->json($response,200);
         }
         else{
         // Handle file Upload

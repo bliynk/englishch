@@ -22,7 +22,7 @@ class AuthController extends Controller
         ]);
         
         if($validator->fails()){
-            return response()->json(['errors'=>$validator->errors()->all()],422);
+            return response()->json(['status'=>400,'errors'=>$validator->errors()->all()],200);
         }else{
             $user= User::create([
                 'first_name'=>$request->first_name,
@@ -32,7 +32,7 @@ class AuthController extends Controller
             ]);
             $token = $user->createToken('Token')->accessToken;
             $response=[
-                'status'=>"done",
+                'status'=>200,
                 'message'=>'Admin'.$user->first_name.'has been added successfully',
                 'accessToken'=>$token,
                 'user'=>$user,
@@ -58,7 +58,7 @@ class AuthController extends Controller
             return response()->json($response,200);
         }
         else{
-            return response()->json(['status'=>404,'message'=>'Unauthorized'],401);
+            return response()->json(['status'=>404,'message'=>'Unauthorized'],200);
         }
     }
     public function logout (Request $request) {
@@ -85,7 +85,7 @@ class AuthController extends Controller
         'password'=>'required'
        ]);
        if($validator->fails()){
-        return response()->json(['errors'=>$validator->errors()->all()],422);
+        return response()->json(['status'=>400,'errors'=>$validator->errors()->all()],200);
     }else{
         $user->first_name=$request->first_name;
         $user->last_name=$request->last_name;
