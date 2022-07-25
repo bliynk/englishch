@@ -3,7 +3,10 @@ import "./LoginPage.css";
 import MainLogo from "../assets/images/logo/main_logo.png";
 import Api from "../../apis/apis";
 import Notifications from "../../notifications/notifications";
+import { useNavigate } from 'react-router-dom';
 export default function LoginPage() {
+
+  let navigate = useNavigate();
 
 
   let [email,setEmail]=useState(null);
@@ -34,8 +37,10 @@ export default function LoginPage() {
 
     if (res.status == 200)
     {
-      console.log(res);
-      await Notifications.errorMsg(res.message);
+      sessionStorage.setItem('authData',JSON.stringify(res.user));
+      sessionStorage.setItem('token',res.accessToken);
+      navigate('/dashboard');
+      await Notifications.successMsg(res.message);
     }
     else
     {
