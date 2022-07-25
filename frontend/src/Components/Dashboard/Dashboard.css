@@ -1,0 +1,164 @@
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap');
+
+/* Variables */
+:root {
+    --header-navigation-bg-color: #1ba28b;
+    --white-color: #FFFFFF;
+}
+
+
+.dashboard_header {
+    background-color: var(--header-navigation-bg-color);
+}
+
+/* Style the tab */
+.tab {
+    float: left;
+    border: none;
+    background-color: var(--header-navigation-bg-color);
+    width: 20%;
+    height: 653px;
+    position: relative;
+    top: 0px;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+    display: flex;
+    align-items: center;
+    background-color: inherit;
+    color: #ddd;
+    padding: 11px 16px;
+    width: 100%;
+    border: none;
+    outline: none;
+    text-align: left;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 16px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: #a0c2bc;
+}
+
+/* Create an active/current "tab button" class */
+.tab button.active {
+    background-color: #a0c2bc;
+}
+
+.tab .secondButton {
+    background-color: #a0c2bc;
+}
+
+.tab .thirdButton {
+    background-color: #a0c2bc;
+}
+
+.tab .fourButton {
+    background-color: #a0c2bc;
+}
+
+/* Style the tab content */
+.tabcontent {
+    float: left;
+    padding: 0px 0px;
+    border: none;
+    width: 80%;
+    border-left: none;
+    height: 300px;
+}
+
+._gray_bg {
+    width: 100%;
+    padding: 20px;
+    background-color: #eeeeee;
+}
+
+.box_one {
+    width: 250px;
+    padding: 20px;
+    background-color: #b5d4a7;
+    border: 4px solid #93c47d;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+}
+
+.box_two {
+    width: 250px;
+    padding: 20px;
+    background-color: #cfe2fc;
+    border: 4px solid #adcef9;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+}
+
+.box_three {
+    width: 250px;
+    padding: 20px;
+    background-color: #fbd9b5;
+    border: 4px solid #f6b26b;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+}
+
+.box_four {
+    width: 250px;
+    padding: 20px;
+    background-color: #f5cccc;
+    border: 4px solid #eba0a0;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+}
+
+table {
+    font-family: 'Roboto', sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td,
+th {
+    text-align: center;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+tr:nth-child(even) {
+    background-color: #f5f5f5;
+}
+
+.search_btn_submit {
+    width: 80px;
+    height: 35px;
+    background-color: #fff;
+    border: 3px solid #333;
+    box-shadow: 0px 4px 5px #000;
+    font-weight: 600;
+}
+
+.new_user {
+    box-shadow: 0px 4px 5px #000;
+    font-weight: 600;
+}
+
+.cate_table {
+    width: 500px;
+    height: 300px;
+    overflow-y: auto;
+}

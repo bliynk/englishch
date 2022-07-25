@@ -1,0 +1,23 @@
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap');
+/* Variables */
+:root {
+    --header-navigation-bg-color: #1ba28b;
+    --white-color: #FFFFFF;
+}
+
+.customers_header {
+    background-color: var(--header-navigation-bg-color);
+}
+
+.customer_aside {
+    background-color: var(--header-navigation-bg-color);
+}
+
+.right_side{
+    flex: 1 1 100%;
+}
+
+.customer_table{
+    width: 83%;
+}
