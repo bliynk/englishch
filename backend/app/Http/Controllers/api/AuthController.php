@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Laravel\Passport\RefreshToken;
+use Laravel\Passport\Token;
 
 class AuthController extends Controller
 {
@@ -60,8 +62,14 @@ class AuthController extends Controller
         }
     }
     public function logout (Request $request) {
-        $token = $request->user()->token();
-        $token->revoke();
+        // $token = $request->user()->token();
+        // $token->revoke();
+
+        $user=Auth::user();
+        $tokens =  $user->tokens->pluck('id');
+        Token::whereIn('id', $tokens)
+            ->update(['revoked'=> true]);
+        RefreshToken::whereIn('access_token_id', $tokens)->update(['revoked' => true]);
         $response = [
             'status'=>200,
             'message' => 'You have been successfully logged out!'
