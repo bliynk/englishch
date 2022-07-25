@@ -29,7 +29,7 @@ export default class Api {
     // Admin SignIn
     static adminSignIn = async (data) => {
         try {
-            const res = await axios.post(api_url+`admin-login`, data);
+            const res = await axios.post(api_url+`api/login`,data);
             return res.data;
         } catch (error) {
             return error.data;

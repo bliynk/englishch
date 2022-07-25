@@ -17,30 +17,33 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('login',[AuthController::class,'login'])->name('Login');
 
-Route::middleware('auth:api')->group(function(){
-    Route::post('add-admin',[AuthController::class,'register'])->name('Register');
-    Route::post('edit-admin/{user}',[AuthController::class,'editAdmin'])->name('editAdmin');
-    Route::post('logout-user',[AuthController::class,'logout'])->name('Logout');
+    Route::post('login',[AuthController::class,'login'])->name('Login');
 
-    // brochure routes
-    Route::post('add-brochure',[BrochureController::class,'createBrochure'])->name('CreateBrochure');
-    Route::post('edit-brochure/{brochure}',[BrochureController::class,'editBrochure'])->name('EditBrochure');
-    Route::post('delete-brochure/{brochure}',[BrochureController::class,'deleteBrochure'])->name('DeleteBrochure');
-    Route::get('exportBrochure',[BrochureController::class,'exportBrochure'])->name('exportBrochure');
-    Route::post('get-brochureQR/{brochure}',[BrochureController::class,'brochureQR'])->name('BrochureQR');
-    // fetch api
-    // cateogry
-    Route::post('fetch-category',[BrochureController::class,'fetchCategory'])->name('FetchCategory');
-    // subCategory
-    Route::post('fetch-sub-category/{category}',[BrochureController::class,'fetchSubCategory'])->name('FetchSubCategory');
+    Route::middleware('auth:api')->group(function(){
+        Route::post('add-admin',[AuthController::class,'register'])->name('Register');
+        Route::post('edit-admin/{user}',[AuthController::class,'editAdmin'])->name('editAdmin');
+        Route::post('logout-user',[AuthController::class,'logout'])->name('Logout');
 
-});
-Route::post('downloadQR/{brochure}',[BrochureController::class,'DownloadQR'])->name('DownloadQR');
+        // brochure routes
+        Route::post('add-brochure',[BrochureController::class,'createBrochure'])->name('CreateBrochure');
+        Route::post('edit-brochure/{brochure}',[BrochureController::class,'editBrochure'])->name('EditBrochure');
+        Route::post('delete-brochure/{brochure}',[BrochureController::class,'deleteBrochure'])->name('DeleteBrochure');
+        Route::get('exportBrochure',[BrochureController::class,'exportBrochure'])->name('exportBrochure');
+        Route::post('get-brochureQR/{brochure}',[BrochureController::class,'brochureQR'])->name('BrochureQR');
+        // fetch api
+        // cateogry
+        Route::get('fetch-category',[BrochureController::class,'fetchCategory'])->name('FetchCategory');
+        // subCategory
+        Route::get('fetch-sub-category/{category}',[BrochureController::class,'fetchSubCategory'])->name('FetchSubCategory');
 
-// customer api routes
-Route::get('search-brochure/{brochurenumber?}/{name?}/{publisher?}',[CustomerController::class,'searchBrochure'])->name('SearchBrochure');
+    });
+    Route::get('downloadQR/{brochure}',[BrochureController::class,'DownloadQR'])->name('DownloadQR');
+
+    // customer api routes
+    Route::get('search-brochure/{brochurenumber?}/{name?}/{publisher?}',[CustomerController::class,'searchBrochure'])->name('SearchBrochure');
+
+
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();

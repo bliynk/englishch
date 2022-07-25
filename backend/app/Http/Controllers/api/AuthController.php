@@ -20,7 +20,7 @@ class AuthController extends Controller
             'email'=>'required|unique:users,email',
             'password'=>'required'
         ]);
-        
+
         if($validator->fails()){
             return response()->json(['status'=>400,'errors'=>$validator->errors()->all()],200);
         }else{
@@ -100,10 +100,10 @@ class AuthController extends Controller
         return response()->json($response,200);
     }
 
-    
-       
+
+
 
     }
 
- 
+
 }
