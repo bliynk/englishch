@@ -157,7 +157,7 @@ class BrochureController extends Controller
     }
     public function fetchCategory(){
         $category=Category::with('getSubCategory')->get();
-        $data=$category->toJson();
+        $data=$category;
         $responce=[
             'status'=>200,
             'message'=>'fetch categories',
