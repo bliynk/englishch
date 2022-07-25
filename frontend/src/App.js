@@ -5,6 +5,7 @@ import Dashboard from "./Components/Dashboard/Dashboard";
 import LoginPage from "./Components/LoginPage/LoginPage";
 import Customers from "./Components/Customers/Customers";
 import {ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
     return (

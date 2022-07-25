@@ -18,7 +18,7 @@ class AuthController extends Controller
             'email'=>'required|unique:users,email',
             'password'=>'required'
         ]);
-        
+
         if($validator->fails()){
             return response()->json(['errors'=>$validator->errors()->all()],422);
         }else{
@@ -56,7 +56,7 @@ class AuthController extends Controller
             return response()->json($response,200);
         }
         else{
-            return response()->json(['status'=>404,'message'=>'Unauthorized'],401);
+            return response()->json(['status'=>404,'message'=>'Unauthorized'],200);
         }
     }
     public function logout (Request $request) {
@@ -92,10 +92,10 @@ class AuthController extends Controller
         return response()->json($response,200);
     }
 
-    
-       
+
+
 
     }
 
- 
+
 }
