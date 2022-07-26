@@ -10,6 +10,9 @@ export default function Dashboard() {
 
   let navigate=useNavigate();
 
+
+
+
   useEffect(()=>{
     let checkAuth=sessionStorage.getItem('token');
 
@@ -100,7 +103,7 @@ export default function Dashboard() {
           </div>
           <div>
             <div className="flex items-center">
-              <span className="text-gray-200 mr-2">Hello Bejhon</span>
+              <span className="text-gray-200 mr-2">{JSON.parse(sessionStorage.getItem('authData'))?"Hello "+ JSON.parse(sessionStorage.getItem('authData')).first_name:""}</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -138,7 +141,7 @@ export default function Dashboard() {
             </div>
             <div>
               <div className="flex flex-col">
-                <h3 className="text-white ml-3 text-xl">Bejhon Pacadzioski</h3>
+                <h3 className="text-white ml-3 text-xl">{JSON.parse(sessionStorage.getItem('authData'))? JSON.parse(sessionStorage.getItem('authData')).first_name+' '+JSON.parse(sessionStorage.getItem('authData')).last_name:""}</h3>
                 <div className="flex items-center justify-around mt-2">
                   <h6 className="text-blue-800 underline cursor-pointer">
                     Profile
