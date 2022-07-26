@@ -1,7 +1,28 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import "./Dashboard.css";
 import MainLogo from "../assets/images/logo/main_logo.png";
+import {useNavigate} from "react-router-dom";
+import Api from "../../apis/apis";
+import Notifications from "../../notifications/notifications";
+
+
 export default function Dashboard() {
+
+  let navigate=useNavigate();
+
+  useEffect(()=>{
+    let checkAuth=sessionStorage.getItem('token');
+
+    if (checkAuth)
+    {}
+    else
+    {
+      navigate('/loginpage')
+    }
+  },[])
+
+
+
   const [showHideFirstTab, HideShowFirstTab] = useState(true);
   const [showHideSecondTab, HideShowSecondTab] = useState(false);
   const [showHideThirdTab, HideShowThirdTab] = useState(false);
@@ -34,6 +55,29 @@ export default function Dashboard() {
     HideShowSecondTab(false);
     HideShowFirstTab(false);
   }
+
+
+  async function logout(e) {
+    e.preventDefault();
+
+    sessionStorage.removeItem('authData');
+    sessionStorage.removeItem('token');
+
+    let res= await Api.adminSignOut();
+
+    if (res.status == 200)
+    {
+      navigate('/loginpage');
+      await Notifications.successMsg(res.message);
+    }
+    else
+    {
+      await Notifications.errorMsg(res.message);
+    }
+  }
+
+
+
   return (
     <div>
       {/* Header */}
@@ -102,7 +146,7 @@ export default function Dashboard() {
                   <h6 className="text-blue-800 underline cursor-pointer">
                     Profile
                   </h6>
-                  <h6 className="text-blue-800 underline cursor-pointer">
+                  <h6 className="text-blue-800 underline cursor-pointer" onClick={logout}>
                     Logout
                   </h6>
                 </div>

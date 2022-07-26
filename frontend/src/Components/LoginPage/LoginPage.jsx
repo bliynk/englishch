@@ -39,6 +39,7 @@ export default function LoginPage() {
     {
       sessionStorage.setItem('authData',JSON.stringify(res.user));
       sessionStorage.setItem('token',res.accessToken);
+      resetForm();
       navigate('/dashboard');
       await Notifications.successMsg(res.message);
     }
@@ -46,7 +47,6 @@ export default function LoginPage() {
     {
       await Notifications.errorMsg(res.message);
     }
-
 
   }
 

@@ -26,7 +26,7 @@ async function checkLogin() {
 
 export default class Api {
 
-    // Admin SignIn
+    //  SignIn
     static adminSignIn = async (data) => {
         try {
             const res = await axios.post(api_url+`api/login`,data);
@@ -38,10 +38,13 @@ export default class Api {
 
 
     // Admin Change Profile
-    static adminUpdateProfile = async (data) => {
+    static adminSignOut = async () => {
         await checkLogin();
         try {
-            const res = await axios.post(api_url+`admin-update-profile`, data,token);
+
+            const res = await axios.post(api_url+`api/logout-user`,token);
+            sessionStorage.removeItem('authData');
+            sessionStorage.removeItem('token');
             return res.data;
         } catch (error) {
             return error.data;
