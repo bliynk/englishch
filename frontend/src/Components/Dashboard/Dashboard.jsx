@@ -31,6 +31,113 @@ export default function Dashboard() {
   const [showHideThirdTab, HideShowThirdTab] = useState(false);
   const [ShowHideFourthTab, HideShowFourthTab] = useState(false);
 
+  let [formText,setFormText]=useState('Add');
+  let [genPassword,setGenPassword]=useState("");
+
+
+  let [fName,setFName]=useState("");
+  let [lName,setLName]=useState("");
+  let [email,setEmail]=useState("");
+
+  let [editIndex,setEditIndex]=useState(null);
+
+
+
+  async function submitForm(e) {
+    e.preventDefault();
+
+
+    if (formText == 'Add')  // add user
+    {
+      let data={
+        first_name: fName,
+        last_name: lName,
+        email: email,
+        password: genPassword
+      }
+
+      console.log(data)
+
+      let res= await Api.adminAdd(data);
+
+      console.log(res)
+
+      if (res.status == 200)
+      {
+        resetForm();
+        await Notifications.successMsg(res.message);
+      }
+      else
+      {
+        await Notifications.errorMsg(res.message);
+        resetForm();
+      }
+    }
+    else   // edit user
+    {
+      let data={
+        first_name: fName,
+        last_name: lName,
+        email: email,
+        password: genPassword
+      }
+
+      let res= await Api.adminEdit(data,editIndex);
+
+      if (res.status == 200)
+      {
+        resetForm();
+        toggleFormStatus();
+        await Notifications.successMsg(res.message);
+      }
+      else
+      {
+        resetForm();
+        toggleFormStatus();
+        await Notifications.errorMsg(res.message);
+      }
+    }
+  }
+
+
+
+  function resetForm() {
+    setFName("");
+    setLName("");
+    setEmail("");
+    setGenPassword("");
+  }
+
+
+  function toggleFormStatus() {
+    if (formText == 'Add')
+    {
+      setFormText('Edit')
+    }
+    else
+    {
+      setFormText('Add');
+    }
+  }
+  
+  
+  function generatePassword(e) {
+    e.preventDefault();
+
+
+    const chars = "0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const passwordLength = 12;
+    let password = "";
+
+    for (let i = 0; i <= passwordLength; i++) {
+      const randomNumber = Math.floor(Math.random() * chars.length);
+      password += chars.substring(randomNumber, randomNumber +1);
+    }
+
+    setGenPassword(password);
+  }
+
+
   function displayHideFirstTab() {
     HideShowFirstTab(true);
     HideShowSecondTab(false);
@@ -702,83 +809,9 @@ export default function Dashboard() {
                       <td>Pacadzioski</td>
                       <td>bejhan.pacadziosku@student</td>
                       <td>**************</td>
-                      <td className="text-blue-800 underline cursor-pointer">
+                      <td className="text-blue-800 underline cursor-pointer" onClick={toggleFormStatus}>
                         Edit
                       </td>
-                    </tr>
-                    <tr>
-                      <td>Brent</td>
-                      <td>Anderson</td>
-                      <td>brent.anderson@outlook.com</td>
-                      <td>**************</td>
-                      <td className="text-blue-800 underline cursor-pointer">
-                        Edit
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Tina</td>
-                      <td>Ryan</td>
-                      <td>tina.ryan@outlook.com</td>
-                      <td>**************</td>
-                      <td className="text-blue-800 underline cursor-pointer">
-                        Edit
-                      </td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
                     </tr>
                   </table>
                 </div>
@@ -786,9 +819,9 @@ export default function Dashboard() {
                 {/* Add New User */}
                 <div className="relative right-20 top-20">
                   <h2 className="text-xl font-medium text-gray-900 mb-3">
-                    Add new User
+                    {formText} new User
                   </h2>
-                  <form className="flex flex-col">
+                  <form className="flex flex-col" onSubmit={submitForm}>
                     <div className="flex items-center mb-6">
                       <label for="fname" className="font-medium">
                         First Name:{" "}
@@ -797,6 +830,8 @@ export default function Dashboard() {
                         type="text"
                         id="fname"
                         name="fname"
+                        value={fName}
+                        onChange={(e)=>{setFName(e.target.value)}}
                         className="border-2 border-solid border-gray-900 rounded outline-none pl-2 ml-5"
                         placeholder="Max"
                       />
@@ -809,6 +844,8 @@ export default function Dashboard() {
                         type="text"
                         id="lname"
                         name="lname"
+                        value={lName}
+                        onChange={(e)=>{setLName(e.target.value)}}
                         className="border-2 text-sm w-48 border-solid border-gray-900 rounded outline-none pl-2 ml-5"
                         placeholder="Musterman"
                       />
@@ -821,6 +858,8 @@ export default function Dashboard() {
                         type="email"
                         id="email"
                         name="email"
+                        value={email}
+                        onChange={(e)=>{setEmail(e.target.value)}}
                         className="border-2 text-sm w-48 border-solid border-gray-900 rounded outline-none pl-2 ml-14"
                         placeholder="Max.musterman@gmail.com"
                       />
@@ -829,7 +868,7 @@ export default function Dashboard() {
                       <label for="email" className="font-medium">
                         Password:{" "}
                       </label>
-                      <button className="border-2 border-solid border-gray-900 bg-white shadow px-4 py-2 font-medium ml-8">
+                      <button className="border-2 border-solid border-gray-900 bg-white shadow px-4 py-2 font-medium ml-8" style={{width: "100%"}} onClick={generatePassword}>
                         Generate Password
                       </button>
                     </div>
@@ -837,12 +876,14 @@ export default function Dashboard() {
                       type="password"
                       id="password"
                       name="password"
+                      value={genPassword}
+                      onChange={(e)=>{setGenPassword(e.target.value)}}
                       className="border-2 text-sm w-48 border-solid border-gray-900 rounded outline-none pl-2 ml-24"
                       placeholder="W?JKHAISUA@K"
                     />
 
-                    <button className="border-2 new_user border-solid border-gray-900 bg-white shadow w-40 mt-6 py-2 font-medium ml-0">
-                      Add new User
+                    <button type={'submit'} className="border-2 new_user border-solid border-gray-900 bg-white shadow w-40 mt-6 py-2 font-medium ml-0">
+                      {formText} new User
                     </button>
                   </form>
                 </div>
