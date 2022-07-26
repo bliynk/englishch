@@ -60,9 +60,6 @@ export default function Dashboard() {
   async function logout(e) {
     e.preventDefault();
 
-    sessionStorage.removeItem('authData');
-    sessionStorage.removeItem('token');
-
     let res= await Api.adminSignOut();
 
     if (res.status == 200)
