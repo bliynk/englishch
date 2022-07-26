@@ -78,4 +78,17 @@ export default class Api {
             return error.data;
         }
     }
+
+
+    // get categories and sub categories
+    static adminEdit = async (data,index) => {
+        await checkLogin();
+        try {
+            let data={};
+            const res = await axios.post(api_url+`api/edit-admin/`+index,data,token);
+            return res.data;
+        } catch (error) {
+            return error.data;
+        }
+    }
 }
