@@ -100,10 +100,55 @@ class AuthController extends Controller
         return response()->json($response,200);
     }
 
-
-
-
     }
+
+    public function searchAdmin(Request $request){
+        $validator=Validator::make($request->all(),[
+            'email'=>'required'
+        ]);
+        if($validator->fails()){
+            return response()->json(['errors'=>$validator->errors()->all()],200);
+        }
+        else{
+            $admin=User::where('email','like','%' . $request->email . '%')->get();
+            if($admin){
+                $responce=[
+                    'status'=>200,
+                    'message'=>'Admin founded successfully',
+                    'data'=>$admin
+                ];
+            }
+            else{
+                $responce=[
+                    'status'=>404,
+                    'message'=>'Admin not found',
+                    'data'=>$admin
+                ];
+            }
+        }
+        return response()->json($responce,200);
+    }
+    public function fetchAdmin(){
+        $admin=User::all();
+        if($admin!=null){
+            $responce=[
+                'status'=>200,
+                'message'=>"All admin get successfully",
+                'data'=>$admin
+                
+            ];
+        }
+        else{
+            $responce=[
+                'status'=>404,
+                'message'=>"Not Found",
+                'data'=>$admin
+            ];
+        }
+
+        return response()->json($responce,200);
+    }
+ 
 
 
 }

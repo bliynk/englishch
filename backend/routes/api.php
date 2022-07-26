@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 
     Route::middleware('auth:api')->group(function(){
         Route::post('add-admin',[AuthController::class,'register'])->name('Register');
+        Route::post('search-admin/',[AuthController::class,'searchAdmin'])->name('SearchAdmin');
         Route::post('edit-admin/{user}',[AuthController::class,'editAdmin'])->name('editAdmin');
         Route::post('logout-user',[AuthController::class,'logout'])->name('Logout');
 
@@ -41,8 +42,9 @@ use Illuminate\Support\Facades\Route;
     Route::get('downloadQR/{brochure}',[BrochureController::class,'DownloadQR'])->name('DownloadQR');
 
     // customer api routes
-    Route::get('search-brochure/{brochurenumber?}/{name?}/{publisher?}',[CustomerController::class,'searchBrochure'])->name('SearchBrochure');
-
+    Route::post('search-brochure/{type}',[CustomerController::class,'searchBrochure'])->name('SearchBrochure');
+    Route::post('sort-brochure/',[CustomerController::class,'sortBrochure'])->name('SortBrochure');
+    
 
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
