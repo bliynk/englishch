@@ -201,5 +201,29 @@ class BrochureController extends Controller
         ];
         return response()->json($responce,200); 
     }
+
+    public function oldBrochure(){
+        $end = date('Y-m-d H:i:s', strtotime('+1 years'));
+        // dd($end);
+        $data=Brochur::where('created_at','>=',$end)->get();
+        if(count($data)==0){
+            $responce=[
+                'status'=>404,
+                'message'=>"Not Found",
+                'data'=>$data
+            ];
+        }
+        else{
+            $responce=[
+                'status'=>200,
+                'message'=>"Old Brochures Found",
+                'data'=>$data
+            ];
+        }
+
+        return response()->json($responce,200);
+
+
+    }
 }
 

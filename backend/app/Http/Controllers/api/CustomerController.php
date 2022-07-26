@@ -55,4 +55,54 @@ class CustomerController extends Controller
         }
         return response()->json($responce,200);
     }
+
+    public function fetchRegisterAdmin(){
+        $data=User::count();
+            $responce=[
+                'status'=>200,
+                'message'=>"Registered Admin",
+                'data'=>$data
+            ];
+
+        return response()->json($responce,200);
+
+    }
+
+    public function fetchBrochureCount(){
+        $data=Brochur::count();
+            $responce=[
+                'status'=>200,
+                'message'=>"All Brochures",
+                'data'=>$data
+            ];
+
+        return response()->json($responce,200);
+
+    }
+
+    public function brochureInShowroom(){
+        $data=Brochur::where('in_showroom','=',1)->count();
+            $responce=[
+                'status'=>200,
+                'message'=>"All Brochures",
+                'data'=>$data
+            ];
+
+        return response()->json($responce,200);
+
+    }
+    public function oldBrochureCheck(){
+        $end = date('Y-m-d H:i:s', strtotime('+1 years'));
+        // dd($end);
+        $data=Brochur::where('created_at','>=',$end)->count();
+        $responce=[
+            'status'=>200,
+            'message'=>"All old Brochures",
+            'data'=>$data
+        ];
+        return response()->json($responce,200);
+
+
+    }
+
 }

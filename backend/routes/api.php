@@ -32,6 +32,8 @@ use Illuminate\Support\Facades\Route;
         Route::post('delete-brochure/{brochure}',[BrochureController::class,'deleteBrochure'])->name('DeleteBrochure');
         Route::get('exportBrochure',[BrochureController::class,'exportBrochure'])->name('exportBrochure');
         Route::post('get-brochureQR/{brochure}',[BrochureController::class,'brochureQR'])->name('BrochureQR');
+        Route::post('oldBrochure/',[BrochureController::class,'oldBrochure'])->name('OldBrochure');
+
         // fetch api
         // cateogry
         Route::post('fetch-category',[BrochureController::class,'fetchCategory'])->name('FetchCategory');
@@ -44,7 +46,10 @@ use Illuminate\Support\Facades\Route;
     // customer api routes
     Route::post('search-brochure/{type}',[CustomerController::class,'searchBrochure'])->name('SearchBrochure');
     Route::post('sort-brochure/',[CustomerController::class,'sortBrochure'])->name('SortBrochure');
-    
+    Route::post('fetch-registered-admin/',[CustomerController::class,'fetchRegisterAdmin'])->name('FetchRegisterAdmin');
+    Route::post('fetch-brochureCount/',[CustomerController::class,'fetchBrochureCount'])->name('FetchBrochureCount');
+    Route::post('fetch-brochureInShowroom/',[CustomerController::class,'brochureInShowroom'])->name('BrochureInShowroom');
+    Route::post('fetch-oldBrochureCheck/',[CustomerController::class,'oldBrochureCheck'])->name('OldBrochureCheck');
 
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
