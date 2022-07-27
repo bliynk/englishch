@@ -48,7 +48,7 @@ class BrochureController extends Controller
             $filenameWithExt = $request->file('file')->getClientOriginalName();
             //Get just filename
             $filename = pathinfo($filenameWithExt, Auth::user()->id);
-           
+
             $path = $request->file('file')->storeAs('public/brochures/'.Auth::user()->id,$filename);
 
             $pdf=new Brochure_pdf();
@@ -152,7 +152,7 @@ class BrochureController extends Controller
     public function exportBrochure(){
 
         $brochur=Brochur::get();
-        
+
         return Excel::download(new BrochureExport, 'brochures.xlsx');
     }
     public function fetchCategory(){
@@ -177,7 +177,7 @@ class BrochureController extends Controller
     }
     public function brochureQR(Brochur $brochure){
             $brochure_id=$brochure->id;
-            
+
             $qrcode=QrCode::generate('http://127.0.0.1:8000/api/downloadQR/'.$brochure_id);
             Storage::disk('public')->put('qrcode/'.$brochure_id.'.svg', $qrcode);
             $url = 'qrcode/'.$brochure_id.'.svg';
@@ -199,7 +199,7 @@ class BrochureController extends Controller
             'message'=>'QR url generated successfully',
             'url'=>Storage::url($path),
         ];
-        return response()->json($responce,200); 
+        return response()->json($responce,200);
     }
 
     public function oldBrochure(){

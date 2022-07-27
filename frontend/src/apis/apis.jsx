@@ -103,4 +103,31 @@ export default class Api {
         }
     }
 
+
+    // get all categories
+    static getAllCategories = async () => {
+        await checkLogin();
+        try {
+            let data={}
+            const res = await axios.post(api_url+`api/fetch-category`,data,token);
+            return res.data;
+        } catch (error) {
+            return error.data;
+        }
+    }
+
+
+
+    // get all counters
+    static getAllCounters = async () => {
+        await checkLogin();
+        try {
+            let data={}
+            const res = await axios.post(api_url+`api/fetch-counter-data`,data,token);
+            return res.data;
+        } catch (error) {
+            return error.data;
+        }
+    }
+
 }

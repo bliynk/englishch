@@ -11,6 +11,8 @@ export default function Dashboard() {
   let navigate=useNavigate();
 
   let [adminData,setAdminData]=useState(null);
+  let [categoryData,setCategoryData]=useState(null);
+  let [counterData,setCounterData]=useState(null);
 
 
   useEffect( () => {
@@ -27,7 +29,8 @@ export default function Dashboard() {
     async function setData() {
       // You can await here
       await getAdminData();
-      console.log(adminData);
+      await getCategoryData();
+      await getCounterData();
       // ...
     }
     setData().then(r => console.log("Data Fetched"));
@@ -35,13 +38,37 @@ export default function Dashboard() {
 
 
 
+  async function getCategoryData() {
+
+    let res =await Api.getAllCategories();
+
+    if (res.status == 200)
+    {
+      await setCategoryData(res.data);
+    }
+
+  }
+
   async function getAdminData() {
 
     let res =await Api.getAllAdmin();
 
     if (res.status == 200)
     {
-      setAdminData(res.data);
+      await setAdminData(res.data);
+    }
+
+  }
+
+
+  async function getCounterData() {
+
+    let res =await Api.getAllCounters();
+
+    if (res.status == 200)
+    {
+      await setCounterData(res.data);
+
     }
 
   }
@@ -409,7 +436,7 @@ export default function Dashboard() {
                       <div className="flex items-center">
                         <div className="flex flex-col">
                           <div className="flex justify-between">
-                            <h3 className="text-white text-2xl">5</h3>
+                            <h3 className="text-white text-2xl">{counterData?counterData.admin:""}</h3>
                             <div>
                               <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -435,7 +462,7 @@ export default function Dashboard() {
                       <div className="flex items-center">
                         <div className="flex flex-col">
                           <div className="flex justify-between">
-                            <h3 className="text-white text-2xl">1489</h3>
+                            <h3 className="text-white text-2xl">{counterData?counterData.brochure:""}</h3>
                             <div>
                               <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -462,7 +489,7 @@ export default function Dashboard() {
                       <div className="flex items-center">
                         <div className="flex flex-col">
                           <div className="flex justify-between">
-                            <h3 className="text-white text-2xl">124</h3>
+                            <h3 className="text-white text-2xl">{counterData?counterData.inShowroom:""}</h3>
                             <div>
                               <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -488,7 +515,7 @@ export default function Dashboard() {
                       <div className="flex items-center">
                         <div className="flex flex-col">
                           <div className="flex justify-between">
-                            <h3 className="text-white text-2xl">24</h3>
+                            <h3 className="text-white text-2xl">{counterData?counterData.oldBrochure:""}</h3>
                             <div>
                               <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -986,104 +1013,17 @@ export default function Dashboard() {
                         <th>Description</th>
                         <th>Edit</th>
                       </tr>
-                      <tr>
-                        <td>01</td>
-                        <td>Gehen/Stehen / Aufricten/ Sutzan</td>
-                        <td className="text-blue-800 underline cursor-pointer">
-                          Edit
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>02</td>
-                        <td>Gehen / Stehen / Aufricten/ Sutzan</td>
-                        <td className="text-blue-800 underline cursor-pointer">
-                          Edit
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>03</td>
-                        <td>Gehen / Stehen / Aufricten/ Sutzan</td>
-                        <td className="text-blue-800 underline cursor-pointer">
-                          Edit
-                        </td>
-                      </tr>
-
-                      <tr>
-                        <td>04</td>
-                        <td></td>
-                        <td className="text-blue-800 underline cursor-pointer">
-                          Edit
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>05</td>
-                        <td></td>
-                        <td className="text-blue-800 underline cursor-pointer">
-                          Edit
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>06</td>
-                        <td></td>
-                        <td className="text-blue-800 underline cursor-pointer">
-                          Edit
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>07</td>
-                        <td></td>
-                        <td className="text-blue-800 underline cursor-pointer">
-                          Edit
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>08</td>
-                        <td></td>
-                        <td className="text-blue-800 underline cursor-pointer">
-                          Edit
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>50</td>
-                        <td></td>
-                        <td className="text-blue-800 underline cursor-pointer">
-                          Edit
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>60</td>
-                        <td></td>
-                        <td className="text-blue-800 underline cursor-pointer">
-                          Edit
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>70</td>
-                        <td>Orthopadische Spezialschuhe und Fussbettungen</td>
-                        <td className="text-blue-800 underline cursor-pointer">
-                          Edit
-                        </td>
-                      </tr>
-                      <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
+                      {
+                        categoryData.map((itm,i)=>(
+                            <tr>
+                              <td>{itm.id}</td>
+                              <td>{itm.description}</td>
+                              <td className="text-blue-800 underline cursor-pointer">
+                                Edit
+                              </td>
+                            </tr>
+                        ))
+                      }
                     </table>
                   </div>
                   <div className="ml-4 mt-4">
@@ -1103,111 +1043,33 @@ export default function Dashboard() {
                           Edit
                         </td>
                       </tr>
-                      <tr>
-                        <td>02</td>
-                        <td>01</td>
-                        <td>Gehen / Stehen / Aufricten/ Sutzan</td>
-                        <td className="text-blue-800 underline cursor-pointer">
-                          Edit
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>03</td>
-                        <td>02</td>
-                        <td>Gehen / Stehen / Aufricten/ Sutzan</td>
-                        <td className="text-blue-800 underline cursor-pointer">
-                          Edit
-                        </td>
-                      </tr>
+                      {
+                        categoryData.map((mItm,i)=>{
+                          let subItm=mItm.get_sub_category;
 
-                      <tr>
-                        <td>04</td>
-                        <td>03</td>
-                        <td></td>
-                        <td className="text-blue-800 underline cursor-pointer">
-                          Edit
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>05</td>
-                        <td>04</td>
-                        <td></td>
-                        <td className="text-blue-800 underline cursor-pointer">
-                          Edit
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>06</td>
-                        <td>05</td>
-                        <td></td>
-                        <td className="text-blue-800 underline cursor-pointer">
-                          Edit
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>07</td>
-                        <td>06</td>
-                        <td>Stuhle / Fauteutils (Toilettensthule Siehe)</td>
-                        <td className="text-blue-800 underline cursor-pointer">
-                          Edit
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>08</td>
-                        <td>07</td>
-                        <td></td>
-                        <td className="text-blue-800 underline cursor-pointer">
-                          Edit
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>50</td>
-                        <td>08</td>
-                        <td></td>
-                        <td className="text-blue-800 underline cursor-pointer">
-                          Edit
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>60</td>
-                        <td>09</td>
-                        <td></td>
-                        <td className="text-blue-800 underline cursor-pointer">
-                          Edit
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>70</td>
-                        <td>10</td>
-                        <td></td>
-                        <td className="text-blue-800 underline cursor-pointer">
-                          Edit
-                        </td>
-                      </tr>
-                      <tr>
-                        <td></td>
-                        <td>11</td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td></td>
-                        <td>12</td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td></td>
-                        <td>03</td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td></td>
-                        <td>00</td>
-                        <td></td>
-                        <td></td>
-                      </tr>
+                          subItm.map((itm,j)=>(
+                              <tr>
+                                <td>{mItm.id}</td>
+                                <td>{subItm.id}</td>
+                                <td>{subItm.description}</td>
+                                <td className="text-blue-800 underline cursor-pointer">
+                                  Edit
+                                </td>
+                              </tr>
+                          ))
+
+                          // mItm.get_sub_category.map((cItm,j)=>(
+                          //     <tr>
+                          //       <td>{mItm.id}</td>
+                          //       <td>{cItm.id}</td>
+                          //       <td>{cItm.description}</td>
+                          //       <td className="text-blue-800 underline cursor-pointer">
+                          //         Edit
+                          //       </td>
+                          //     </tr>
+                          // ))
+                        })
+                      }
                     </table>
                   </div>
                 </div>
