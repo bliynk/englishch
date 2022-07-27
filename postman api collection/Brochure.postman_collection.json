@@ -717,6 +717,40 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "http://127.0.0.1:8000/api/fetch-sub-category/1",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiZDE3YWIwNzUwZTVmNmFjZGM2NjdlNDlmMWMwY2U5ZTk2N2JlMjhmZTEzMmU1NGQ4NmViMTZiYjA4YmRhODM3MGE0NGRhMzk2ZTVjY2RjNWUiLCJpYXQiOjE2NTg5MTc1MzAuNTQ1MjMxLCJuYmYiOjE2NTg5MTc1MzAuNTQ1MjM4LCJleHAiOjE2OTA0NTM1MzAuNTI2ODY2LCJzdWIiOiI0Iiwic2NvcGVzIjpbXX0.ILDW1_aherMY1pMN0i29KP00GK48nGrrgyQUQ-c6BLAGHZdGb92hp92clGdungwwQjmL3QIV1ZwYy9uLh_geertDmtmaXyp1JphAtQEZ3vSj9wLZE7zpjUa7Am_85zMPO-ZFZdQqZc_xKhq023RuSRq2WGFW5akoT6w06CyUKEpLn0LwfUEaIRkWalRSsNYxY3wHmRU9vkYvIL406RL08O0Wbbd0ShnPFBh99f54-kkQYxRt2M9lePskm09LgvOX58lVbFw5KIRH5FqILEaDFCLXdGwND3OwCzcxE2G2SKcovms0tgnh8Ov0ztlj86FlP9ZnfukB-lqjnGuQuCvXqrGJMMAXEhkT-GYJRPu-s9oI28mZw9HpS5LNeGXkELYRzM44BJRXoBmWmp-0SU3FsURJQ2Uba2BT-Kp9kbD7Du4ybRedNY0Pk6dNWNgzqGUADbXKskuOfh-wP1qaFR7i48esyRXE9-jU0ggSxxIrCLvj0ccxUj47lrWZP_Tuetlk_8lEilHMI1wS2BLOTmLSEaV99uGGqCE2KESzxvFcJFVM-C711yMmvE7Lwcpx70AJYjwaFXd5GOOeraJv-27QpkUuZSEhlch68sCTZULr4AdS1SoWvdYenf4qtUZxJeeDSPt3vzrnLg_xdxoWkcajwAwsZ4X4nkQLQegmmwTtzLk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/fetch-sub-category/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"fetch-sub-category",
+								"1"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
