@@ -29,7 +29,7 @@ async function checkLogin() {
 
 export default class Api {
 
-    //  SignIn
+    // Admin SignIn
     static adminSignIn = async (data) => {
         try {
             const res = await axios.post(api_url+`api/login`,data);
@@ -40,7 +40,7 @@ export default class Api {
     }
 
 
-    // Admin Change Profile
+    // Admin Logout
     static adminSignOut = async () => {
         await checkLogin();
         try {
@@ -48,6 +48,19 @@ export default class Api {
             const res = await axios.post(api_url+`api/logout-user`,data,token);
             sessionStorage.removeItem('authData');
             sessionStorage.removeItem('token');
+            return res.data;
+        } catch (error) {
+            return error.data;
+        }
+    }
+
+
+    // get all admin
+    static getAllAdmin = async () => {
+        await checkLogin();
+        try {
+            let data={};
+            const res = await axios.post(api_url+`api/fetch-admin`,data,token);
             return res.data;
         } catch (error) {
             return error.data;
@@ -71,7 +84,6 @@ export default class Api {
     static adminEdit = async (data,index) => {
         await checkLogin();
         try {
-            let data={};
             const res = await axios.post(api_url+`api/edit-admin/`+index,data,token);
             return res.data;
         } catch (error) {
@@ -80,15 +92,15 @@ export default class Api {
     }
 
 
-    // get categories and sub categories
-    static adminEdit = async (data,index) => {
+    // search admin
+    static searchAdmin = async (data) => {
         await checkLogin();
         try {
-            let data={};
-            const res = await axios.post(api_url+`api/edit-admin/`+index,data,token);
+            const res = await axios.post(api_url+`api/search-admin`,data,token);
             return res.data;
         } catch (error) {
             return error.data;
         }
     }
+
 }
