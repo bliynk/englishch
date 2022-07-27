@@ -12,6 +12,7 @@ export default function Dashboard() {
 
   let [adminData,setAdminData]=useState(null);
   let [categoryData,setCategoryData]=useState(null);
+  let [subCategory,setSubCategory]=useState(null);
   let [counterData,setCounterData]=useState(null);
 
 
@@ -31,6 +32,7 @@ export default function Dashboard() {
       await getAdminData();
       await getCategoryData();
       await getCounterData();
+      await getSubCategoryData();
       // ...
     }
     setData().then(r => console.log("Data Fetched"));
@@ -48,6 +50,19 @@ export default function Dashboard() {
     }
 
   }
+
+  async function getSubCategoryData() {
+
+    let res =await Api.getAllSubCategories();
+
+    if (res.status == 200)
+    {
+      await setSubCategory(res.data);
+    }
+
+  }
+
+
 
   async function getAdminData() {
 
@@ -1035,40 +1050,18 @@ export default function Dashboard() {
                         <th>Description</th>
                         <th>Edit</th>
                       </tr>
-                      <tr>
-                        <td>01</td>
-                        <td>00</td>
-                        <td>Gehen/Stehen / Aufricten/ Sutzan</td>
-                        <td className="text-blue-800 underline cursor-pointer">
-                          Edit
-                        </td>
-                      </tr>
+
                       {
-                        categoryData.map((mItm,i)=>{
-                          let subItm=mItm.get_sub_category;
-
-                          subItm.map((itm,j)=>(
-                              <tr>
-                                <td>{mItm.id}</td>
-                                <td>{subItm.id}</td>
-                                <td>{subItm.description}</td>
-                                <td className="text-blue-800 underline cursor-pointer">
-                                  Edit
-                                </td>
-                              </tr>
-                          ))
-
-                          // mItm.get_sub_category.map((cItm,j)=>(
-                          //     <tr>
-                          //       <td>{mItm.id}</td>
-                          //       <td>{cItm.id}</td>
-                          //       <td>{cItm.description}</td>
-                          //       <td className="text-blue-800 underline cursor-pointer">
-                          //         Edit
-                          //       </td>
-                          //     </tr>
-                          // ))
-                        })
+                        subCategory?.map((itm,i)=>(
+                            <tr>
+                              <td>{itm.category_id?itm.category_id:""}</td>
+                              <td>{itm.id}</td>
+                              <td>{itm.description}</td>
+                              <td className="text-blue-800 underline cursor-pointer">
+                                Edit
+                              </td>
+                            </tr>
+                        ))
                       }
                     </table>
                   </div>
