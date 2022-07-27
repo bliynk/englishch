@@ -44,7 +44,7 @@ use Illuminate\Support\Facades\Route;
     	Route::post('fetch-allSub-category',[BrochureController::class,'fetchAllSubCategory'])->name('FetchAllSubCategory');
 
         // subCategory
-        Route::get('fetch-sub-category/{category}',[BrochureController::class,'fetchSubCategory'])->name('FetchSubCategory');
+        Route::post('fetch-sub-category/{category}',[BrochureController::class,'fetchSubCategory'])->name('FetchSubCategory');
 
     });
     Route::get('downloadQR/{brochure}',[BrochureController::class,'DownloadQR'])->name('DownloadQR');
@@ -57,6 +57,19 @@ use Illuminate\Support\Facades\Route;
     Route::post('fetch-brochureCount/',[CustomerController::class,'fetchBrochureCount'])->name('FetchBrochureCount');
     Route::post('fetch-brochureInShowroom/',[CustomerController::class,'brochureInShowroom'])->name('BrochureInShowroom');
     Route::post('fetch-oldBrochureCheck/',[CustomerController::class,'oldBrochureCheck'])->name('OldBrochureCheck');
+
+
+
+    // clear
+    Route::get('/clear', function() {
+        $exitCode = Artisan::call('cache:clear');
+        $exitCode = Artisan::call('optimize');
+        $exitCode = Artisan::call('route:cache');
+        $exitCode = Artisan::call('route:clear');
+        $exitCode = Artisan::call('view:clear');
+        $exitCode = Artisan::call('config:cache');
+        return "Cleared";
+    });
 
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
