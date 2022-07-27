@@ -56,12 +56,22 @@ class CustomerController extends Controller
         return response()->json($responce,200);
     }
 
-    public function fetchRegisterAdmin(){
-        $data=User::count();
+    public function fetchDataCount(){
+        $end = date('Y-m-d H:i:s', strtotime('+1 years'));
+        $admin=User::count();
+        $brochure=Brochur::count();
+        $inShowroom=Brochur::where('in_showroom','=',1)->count();
+        $oldBrochure=Brochur::where('created_at','>=',$end)->count();
+
+
+
             $responce=[
                 'status'=>200,
-                'message'=>"Registered Admin",
-                'data'=>$data
+                'message'=>"Counter Data",
+                'admin'=>$admin,
+                'brochure'=>$brochure,
+                'inShowroom'=>$inShowroom,
+                'oldBrochure'=>$oldBrochure,
             ];
 
         return response()->json($responce,200);
