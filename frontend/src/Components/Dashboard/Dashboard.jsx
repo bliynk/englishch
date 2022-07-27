@@ -35,20 +35,6 @@ export default function Dashboard() {
 
 
 
-  // useEffect(async ()=>{
-  //   let checkAuth=sessionStorage.getItem('token');
-  //
-  //   if (checkAuth)
-  //   {}
-  //   else
-  //   {
-  //     navigate('/loginpage')
-  //   }
-  //
-  //   await getAdminData();
-  // },[]);
-
-
   async function getAdminData() {
 
     let res =await Api.getAllAdmin();
@@ -231,6 +217,28 @@ export default function Dashboard() {
     {
       await Notifications.errorMsg(res.message);
     }
+  }
+
+
+  async function searchAdmin(toSearch) {
+
+    let data={
+      email: toSearch
+    }
+
+    let res = await Api.searchAdmin(data);
+
+    if (res.status == 200)
+    {
+      setAdminData(res.data);
+      await Notifications.successMsg(res.message);
+    }
+    else
+    {
+      await Notifications.errorMsg(res.message)
+    }
+
+
   }
 
 
@@ -832,8 +840,9 @@ export default function Dashboard() {
                         </svg>
                         <input
                             type="text"
-                            placeholder="Enter Name"
+                            placeholder="Enter Email"
                             className="border-2 border-solid border-gray-900 rounded-full w-96 pl-8 py-1 outline-none"
+                            onChange={(e)=>{searchAdmin(e.target.value)}}
                         />
                       </form>
                     </div>

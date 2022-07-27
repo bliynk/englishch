@@ -91,4 +91,16 @@ export default class Api {
         }
     }
 
+
+    // search admin
+    static searchAdmin = async (data) => {
+        await checkLogin();
+        try {
+            const res = await axios.post(api_url+`api/search-admin`,data,token);
+            return res.data;
+        } catch (error) {
+            return error.data;
+        }
+    }
+
 }
