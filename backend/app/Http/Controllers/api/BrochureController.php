@@ -175,6 +175,16 @@ class BrochureController extends Controller
         ];
         return response()->json($responce,200);
     }
+    public function fetchAllSubCategory(){
+        $subcategory=SubCategory::all();
+        // dd($subcategory);
+        $responce=[
+            'status'=>200,
+            'message'=>'fetch categories',
+            'data'=>$subcategory
+        ];
+        return response()->json($responce,200);
+    }
     public function brochureQR(Brochur $brochure){
             $brochure_id=$brochure->id;
             
