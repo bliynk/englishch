@@ -58,22 +58,23 @@ class CustomerController extends Controller
         return response()->json($responce,200);
     }
 
-    public function fetchDataCount(){
+     public function fetchDataCount(){
         $end = date('Y-m-d H:i:s', strtotime('+1 years'));
         $admin=User::count();
         $brochure=Brochur::count();
         $inShowroom=Brochur::where('in_showroom','=',1)->count();
         $oldBrochure=Brochur::where('created_at','>=',$end)->count();
-
-
+        $data=[
+            'admin'=>$admin,
+            'brochure'=>$brochure,
+            'inShowroom'=>$inShowroom,
+            'oldBrochure'=>$oldBrochure
+        ];
 
             $responce=[
                 'status'=>200,
                 'message'=>"Counter Data",
-                'admin'=>$admin,
-                'brochure'=>$brochure,
-                'inShowroom'=>$inShowroom,
-                'oldBrochure'=>$oldBrochure,
+                'data'=>$data,
             ];
 
         return response()->json($responce,200);
