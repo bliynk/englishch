@@ -48,7 +48,8 @@ use Illuminate\Support\Facades\Route;
     // customer api routes
     Route::post('search-brochure/{type}',[CustomerController::class,'searchBrochure'])->name('SearchBrochure');
     Route::post('sort-brochure/',[CustomerController::class,'sortBrochure'])->name('SortBrochure');
-    Route::post('fetch-brochureCount/',[CustomerController::class,'fetchBrochureCount'])->name('FetchBrochureCount');
+    Route::post('fetch-counter-data/',[CustomerController::class,'fetchDataCount'])->name('FetchDataCount');
+
     Route::post('fetch-brochureCount/',[CustomerController::class,'fetchBrochureCount'])->name('FetchBrochureCount');
     Route::post('fetch-brochureInShowroom/',[CustomerController::class,'brochureInShowroom'])->name('BrochureInShowroom');
     Route::post('fetch-oldBrochureCheck/',[CustomerController::class,'oldBrochureCheck'])->name('OldBrochureCheck');
