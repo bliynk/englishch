@@ -25,6 +25,8 @@ use Illuminate\Support\Facades\Route;
         Route::post('search-admin/',[AuthController::class,'searchAdmin'])->name('SearchAdmin');
         Route::post('edit-admin/{user}',[AuthController::class,'editAdmin'])->name('editAdmin');
         Route::post('logout-user',[AuthController::class,'logout'])->name('Logout');
+        Route::post('fetch-admin',[AuthController::class,'fetchAdmin'])->name('FetchAdmin');
+
 
         // brochure routes
         Route::post('add-brochure',[BrochureController::class,'createBrochure'])->name('CreateBrochure');
