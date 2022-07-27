@@ -76,6 +76,17 @@ class BrochureController extends Controller
         return response()->json($response,200);
         }
     }
+   public function allBrochures(){
+        $brochure=Brochur::with('brochur_pdf')->get();
+        $data=$brochure;
+        $responce=[
+            'status'=>200,
+            'message'=>'fetch all Brochure',
+            'data'=>$data
+        ];
+        return response()->json($responce,200);
+
+    }
 
     public function editBrochure(Request $request,Brochur $brochur){
         // dd($brochur);

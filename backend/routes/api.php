@@ -35,6 +35,8 @@ use Illuminate\Support\Facades\Route;
         Route::get('exportBrochure',[BrochureController::class,'exportBrochure'])->name('exportBrochure');
         Route::post('get-brochureQR/{brochure}',[BrochureController::class,'brochureQR'])->name('BrochureQR');
         Route::post('oldBrochure/',[BrochureController::class,'oldBrochure'])->name('OldBrochure');
+    	Route::post('fetch-all-brochure',[BrochureController::class,'allBrochures'])->name('AllBrochures');
+
 
         // fetch api
         // cateogry
