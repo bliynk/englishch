@@ -39,6 +39,8 @@ use Illuminate\Support\Facades\Route;
         // fetch api
         // cateogry
         Route::post('fetch-category',[BrochureController::class,'fetchCategory'])->name('FetchCategory');
+    	Route::post('fetch-allSub-category',[BrochureController::class,'fetchAllSubCategory'])->name('FetchAllSubCategory');
+
         // subCategory
         Route::post('fetch-sub-category/{category}',[BrochureController::class,'fetchSubCategory'])->name('FetchSubCategory');
 
