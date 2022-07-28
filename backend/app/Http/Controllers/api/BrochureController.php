@@ -77,7 +77,9 @@ class BrochureController extends Controller
         }
     }
    public function allBrochures(){
-        $brochure=Brochur::with('brochur_pdf')->get();
+        // $brochure=Brochur::with('brochur_pdf')->get();
+       $brochure=Brochur::join('brochure_pdfs', 'brochurs.brochure_pdf_id', '=', 'brochure_pdfs.id')
+       ->get(['brochurs.*', 'brochure_pdfs.url']);;
         $data=$brochure;
         $responce=[
             'status'=>200,
@@ -246,5 +248,35 @@ class BrochureController extends Controller
 
 
     }
+
+    public function editCategory(Request $request,Category $category){
+       
+         $category->description=$request->description; 
+         $category->save();
+         $response=[
+             'status'=>200,
+             'message'=>' Category was successfully edited',
+             'data'=>$category,
+         ];
+         return response()->json($response,200);
+     
+ 
+     }
+
+     public function editSubCategory(Request $request,SubCategory $category){
+        $category->description=$request->description; 
+        $category->category_id=$request->category_id; 
+         $category->save();
+         $response=[
+             'status'=>200,
+             'message'=>' Sub Category was successfully edited',
+             'data'=>$category,
+         ];
+         return response()->json($response,200);
+     
+     
+ 
+     }
+
 }
 

@@ -42,6 +42,8 @@ use Illuminate\Support\Facades\Route;
         // cateogry
         Route::post('fetch-category',[BrochureController::class,'fetchCategory'])->name('FetchCategory');
     	Route::post('fetch-allSub-category',[BrochureController::class,'fetchAllSubCategory'])->name('FetchAllSubCategory');
+        Route::post('edit-category/{category}',[BrochureController::class,'editCategory'])->name('editCategory');
+        Route::post('edit-sub-category/{category}',[BrochureController::class,'editSubCategory'])->name('editSubCategory');
 
         // subCategory
         Route::post('fetch-sub-category/{category}',[BrochureController::class,'fetchSubCategory'])->name('FetchSubCategory');
